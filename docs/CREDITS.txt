@@ -1,5 +1,8 @@
 Camotoy
 - Help with porting to 1.20.1.
 
+Firestar99
+- Fix crash on servers.
+
 Jonathing
 - Make Cumulus client-only.
