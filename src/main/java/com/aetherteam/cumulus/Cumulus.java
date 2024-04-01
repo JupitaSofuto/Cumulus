@@ -37,8 +37,8 @@ public class Cumulus {
 
     public Cumulus(IEventBus bus, Dist dist) {
         bus.addListener(NewRegistryEvent.class, event -> event.register(MENU_REGISTRY));
-        if (dist == Dist.CLIENT) {
 
+        if (dist == Dist.CLIENT) {
             bus.addListener(this::dataSetup);
 
             DeferredRegister<?>[] registers = {
