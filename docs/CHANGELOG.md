@@ -1,4 +1,4 @@
-# Cumulus - NeoForge - 1.20.2-1.0.0
+# Cumulus - NeoForge - 1.20.4-1.0.1
 
 - Full Release
 
