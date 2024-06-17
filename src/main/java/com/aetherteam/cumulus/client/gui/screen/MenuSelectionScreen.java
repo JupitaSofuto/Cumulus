@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class MenuSelectionScreen extends Screen {
-    public static final ResourceLocation LIST_FRAME = new ResourceLocation(Cumulus.MODID, "textures/gui/menu_api/list.png");
+    public static final ResourceLocation LIST_FRAME = ResourceLocation.fromNamespaceAndPath(Cumulus.MODID, "textures/gui/menu_api/list.png");
     private static final int EXTERIOR_WIDTH_PADDING = 13;
     private static final int EXTERIOR_TOP_PADDING = 28;
     private static final int EXTERIOR_BOTTOM_PADDING = 33;
@@ -52,7 +52,7 @@ public class MenuSelectionScreen extends Screen {
     @Override
     public void init() {
         this.menuList = new MenuSelectionList(this, this.frameWidth - (EXTERIOR_WIDTH_PADDING * 2), this.frameHeight, (this.height / 2) - (this.frameHeight / 2) + EXTERIOR_TOP_PADDING, 24);
-        this.menuList.setRenderBackground(false);
+//        this.menuList.setRenderBackground(false); //todo
         this.menuList.setX((this.width / 2) - (this.frameWidth / 2) + EXTERIOR_WIDTH_PADDING);
         this.addRenderableWidget(this.menuList);
 
@@ -80,7 +80,7 @@ public class MenuSelectionScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        this.renderDirtBackground(guiGraphics);
+//        this.renderDirtBackground(guiGraphics); //todo
         this.renderListFrame(guiGraphics);
         this.menuList.render(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
@@ -89,13 +89,13 @@ public class MenuSelectionScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) { }
 
-    @Override
-    public void renderDirtBackground(GuiGraphics guiGraphics) {
-        RenderSystem.setShaderColor(1.75F, 1.75F, 1.75F, 1.0F);
-        guiGraphics.blit(CreateWorldScreen.LIGHT_DIRT_BACKGROUND, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        NeoForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
-    }
+//    @Override //todo
+//    public void renderDirtBackground(GuiGraphics guiGraphics) {
+//        RenderSystem.setShaderColor(1.75F, 1.75F, 1.75F, 1.0F);
+//        guiGraphics.blit(CreateWorldScreen.LIGHT_DIRT_BACKGROUND, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
+//        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+//        NeoForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
+//    }
 
     private void renderListFrame(GuiGraphics guiGraphics) {
         guiGraphics.blit(LIST_FRAME, (this.width / 2) - (this.frameWidth / 2), this.height / 2 - (this.frameHeight / 2), 0.0F, 0.0F, 141, 168, 256, 256);

@@ -16,7 +16,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -30,10 +30,10 @@ public class Cumulus {
     public static final String MODID = "cumulus_menus";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final ResourceKey<Registry<Menu>> MENU_REGISTRY_KEY = ResourceKey.createRegistryKey(new ResourceLocation(Cumulus.MODID, "menu"));
+    public static final ResourceKey<Registry<Menu>> MENU_REGISTRY_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(Cumulus.MODID, "menu"));
     public static final Registry<Menu> MENU_REGISTRY = new RegistryBuilder<>(MENU_REGISTRY_KEY).sync(true).create();
 
-    public Cumulus(IEventBus bus, Dist dist) {
+    public Cumulus(ModContainer container, IEventBus bus, Dist dist) {
         bus.addListener(NewRegistryEvent.class, event -> event.register(MENU_REGISTRY));
         
         if (dist == Dist.CLIENT) {
@@ -47,7 +47,7 @@ public class Cumulus {
                 register.register(bus);
             }
 
-            ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CumulusConfig.CLIENT_SPEC);
+            container.registerConfig(ModConfig.Type.CLIENT, CumulusConfig.CLIENT_SPEC);
         }
     }
 

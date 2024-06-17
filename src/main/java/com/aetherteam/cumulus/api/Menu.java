@@ -145,10 +145,11 @@ public class Menu {
     }
 
     public static class Background {
-        private static final ResourceLocation DEFAULT_REGULAR_BACKGROUND = Screen.BACKGROUND_LOCATION;
-        private static final ResourceLocation DEFAULT_DARK_BACKGROUND = CreateWorldScreen.LIGHT_DIRT_BACKGROUND;
-        private static final ResourceLocation DEFAULT_HEADER_SEPARATOR = CreateWorldScreen.HEADER_SEPERATOR;
-        private static final ResourceLocation DEFAULT_FOOTER_SEPARATOR = CreateWorldScreen.FOOTER_SEPERATOR;
+        private static final ResourceLocation DEFAULT_REGULAR_BACKGROUND = Screen.MENU_BACKGROUND;
+//        private static final ResourceLocation DEFAULT_DARK_BACKGROUND = CreateWorldScreen.LIGHT_DIRT_BACKGROUND; //todo
+        private static final ResourceLocation DEFAULT_DARK_BACKGROUND = Screen.MENU_BACKGROUND;
+        private static final ResourceLocation DEFAULT_HEADER_SEPARATOR = CreateWorldScreen.HEADER_SEPARATOR;
+        private static final ResourceLocation DEFAULT_FOOTER_SEPARATOR = CreateWorldScreen.FOOTER_SEPARATOR;
         private static final WidgetSprites DEFAULT_TAB_BUTTON = TabButtonAccessor.cumulus$getSprites();
 
         private ResourceLocation regularBackground = DEFAULT_REGULAR_BACKGROUND;

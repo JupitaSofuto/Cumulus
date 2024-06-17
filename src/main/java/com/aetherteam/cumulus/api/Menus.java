@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class Menus {
     public static final DeferredRegister<Menu> MENUS = DeferredRegister.create(Cumulus.MENU_REGISTRY_KEY, Cumulus.MODID);
 
-    public static final ResourceLocation MINECRAFT_ICON = new ResourceLocation("textures/block/grass_block_side.png");
+    public static final ResourceLocation MINECRAFT_ICON = ResourceLocation.withDefaultNamespace("textures/block/grass_block_side.png");
     public static final Component MINECRAFT_NAME = Component.translatable("cumulus_menus.menu_title.minecraft");
     public static final BooleanSupplier MINECRAFT_CONDITION = () -> true;
 
@@ -25,7 +25,7 @@ public class Menus {
 
     @Nullable
     public static Menu get(String id) {
-        return Cumulus.MENU_REGISTRY.get(new ResourceLocation(id));
+        return Cumulus.MENU_REGISTRY.get(ResourceLocation.withDefaultNamespace(id));
     }
 
     /**

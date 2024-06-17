@@ -1,26 +1,30 @@
 plugins {
+    id 'java-library'
     id 'eclipse'
+    id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.+'
-    id 'io.github.0ffz.github-packages' version '[1,2)'
+    id 'net.neoforged.gradle.userdev' version '7.0.142'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
 }
 
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
 version = "${mc_version}-${mod_version}-neoforge"
-group = 'com.aetherteam.cumulus'
+group = mod_group
 
 base {
     archivesName = mod_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 runs {
     configureEach {
-        workingDirectory project.file('run')
-        systemProperty "${mod_id}.iside", 'true'
-        systemProperty  'forge.logging.console.level', 'info'
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty  'forge.logging.console.level', 'debug'
 
         modSource project.sourceSets.main
     }
@@ -47,13 +51,6 @@ sourceSets.main.resources {
     srcDir 'src/generated/resources'
 }
 
-subsystems {
-    parchment {
-        minecraftVersion = '1.20.3' //todo
-        mappingsVersion = project.mappings
-    }
-}
-
 dependencies {
     implementation "net.neoforged:neoforge:${project.neoforge_version}"
 }
@@ -62,28 +59,35 @@ repositories {
     maven { url = "https://maven.blamejared.com" }
 }
 
-tasks.named('jar', Jar).configure {
-    manifest {
-        attributes([
-                "Specification-Title"     : project.mod_name,
-                "Specification-Vendor"    : "The Aether Team",
-                "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : project.mod_name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "The Aether Team",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
-}
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+            minecraft_version      : mc_version,
+            minecraft_version_range: mc_version_range,
+            neo_version            : neoforge_version,
+            neo_version_range      : neoforge_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+    inputs.properties replaceProperties
 
-compileJava {
-    options.incremental = false
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
 }
 
 tasks.register('sourceJar', Jar) {
     dependsOn 'classes'
     from sourceSets.main.allSource
     archiveClassifier = 'sources'
+}
+
+compileJava {
+    options.incremental = false
 }
 
 publishing {
@@ -109,26 +113,26 @@ publishing {
 curseforge {
     project {
         apiKey = System.getenv("CURSEFORGE_TOKEN")
-        id = "${project.curseforge_id}"
-        releaseType = "${project.version_type}"
+        id = "${curseforge_id}"
+        releaseType = "${version_type}"
         changelog = file("$rootDir/docs/CHANGELOG.md")
         changelogType = "markdown"
-        addGameVersion("${project.mc_version}")
+        addGameVersion("${mc_version}")
         addGameVersion("NeoForge")
         mainArtifact(tasks.jar) {
-            displayName = "${project.mod_name} - ${version}"
+            displayName = "${mod_name} - ${version}"
         }
     }
 }
 
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
-    projectId = "${project.modrinth_id}"
+    projectId = "${modrinth_id}"
     versionNumber = "${version}"
-    versionType = "${project.version_type}"
-    versionName = "${project.mod_name} - ${version}"
+    versionType = "${version_type}"
+    versionName = "${mod_name} - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
     uploadFile = tasks.jar
-    gameVersions = ["${project.mc_version}"]
+    gameVersions = ["${mc_version}"]
     loaders = ["neoforge"]
 }
