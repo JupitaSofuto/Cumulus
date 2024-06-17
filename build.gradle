@@ -139,3 +139,10 @@ modrinth {
     gameVersions = ["${minecraft_version}"]
     loaders = ["neoforge"]
 }
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
