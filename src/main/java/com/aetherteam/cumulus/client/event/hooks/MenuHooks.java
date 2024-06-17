@@ -13,7 +13,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nullable;
@@ -61,8 +60,8 @@ public class MenuHooks {
         if (screen instanceof TitleScreen titleScreen) {
             if (CumulusConfig.CLIENT.enable_menu_api.get()) {
                 if (!CumulusClient.MENU_HELPER.doesScreenMatchMenu(titleScreen) || screen.getClass() == TitleScreen.class) {
-                    CumulusClient.MENU_HELPER.setFallbackTitleScreen(titleScreen); //todo
-                    CumulusClient.MENU_HELPER.setFallbackBackground(new Menu.Background().regularBackground(Screen.MENU_BACKGROUND).darkBackground(Screen.MENU_BACKGROUND).headerSeparator(CreateWorldScreen.HEADER_SEPARATOR).footerSeparator(CreateWorldScreen.FOOTER_SEPARATOR).tabButton(TabButtonAccessor.cumulus$getSprites()));
+                    CumulusClient.MENU_HELPER.setFallbackTitleScreen(titleScreen);
+                    CumulusClient.MENU_HELPER.setFallbackBackground(new Menu.Background().regularBackground(Screen.MENU_BACKGROUND).headerSeparator(Screen.HEADER_SEPARATOR).footerSeparator(Screen.FOOTER_SEPARATOR).tabButton(TabButtonAccessor.cumulus$getSprites()));
                 }
             } else if (screen.getClass() == TitleScreen.class) {
                 CumulusClient.MENU_HELPER.setFallbackTitleScreen(titleScreen);

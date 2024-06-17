@@ -5,7 +5,7 @@ issueTrackerURL = "${mod_tracker}"
 
 [[mods]]
     modId = "${mod_id}"
-    version = "${file.jarVersion}"
+    version = "${mod_version}"
     displayName = "${mod_name}"
     displayURL = "${mod_url}"
     logoFile = "${mod_name}.png"
@@ -16,13 +16,13 @@ issueTrackerURL = "${mod_tracker}"
 [[dependencies.${mod_id}]]
     modId = "neoforge"
     type = "required"
-    versionRange = "${neoforge_version_range}"
+    versionRange = "${neo_version_range}"
     ordering = "NONE"
     side = "BOTH"
 [[dependencies.${mod_id}]]
     modId = "minecraft"
     type = "required"
-    versionRange="${mc_version_range}"
+    versionRange="${minecraft_version_range}"
     ordering = "NONE"
     side = "BOTH"
 

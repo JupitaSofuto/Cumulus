@@ -6,14 +6,12 @@ import com.aetherteam.cumulus.api.Menu;
 import com.aetherteam.cumulus.api.Menus;
 import com.aetherteam.cumulus.client.CumulusClient;
 import com.aetherteam.cumulus.client.gui.component.MenuSelectionList;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.event.ScreenEvent;
@@ -52,7 +50,6 @@ public class MenuSelectionScreen extends Screen {
     @Override
     public void init() {
         this.menuList = new MenuSelectionList(this, this.frameWidth - (EXTERIOR_WIDTH_PADDING * 2), this.frameHeight, (this.height / 2) - (this.frameHeight / 2) + EXTERIOR_TOP_PADDING, 24);
-//        this.menuList.setRenderBackground(false); //todo
         this.menuList.setX((this.width / 2) - (this.frameWidth / 2) + EXTERIOR_WIDTH_PADDING);
         this.addRenderableWidget(this.menuList);
 
@@ -80,22 +77,25 @@ public class MenuSelectionScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-//        this.renderDirtBackground(guiGraphics); //todo
+        this.renderBackground(guiGraphics, partialTick);
         this.renderListFrame(guiGraphics);
         this.menuList.render(guiGraphics, mouseX, mouseY, partialTick);
         super.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
-    @Override
-    public void renderBackground(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) { }
+    private void renderBackground(GuiGraphics guiGraphics, float partialTick) {
+        if (Minecraft.getInstance().level == null) {
+            this.renderPanorama(guiGraphics, partialTick);
+        }
+        this.renderBlurredBackground(partialTick);
+        this.renderMenuBackground(guiGraphics);
+        NeoForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
+    }
 
-//    @Override //todo
-//    public void renderDirtBackground(GuiGraphics guiGraphics) {
-//        RenderSystem.setShaderColor(1.75F, 1.75F, 1.75F, 1.0F);
-//        guiGraphics.blit(CreateWorldScreen.LIGHT_DIRT_BACKGROUND, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
-//        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-//        NeoForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
-//    }
+    @Override
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+
+    }
 
     private void renderListFrame(GuiGraphics guiGraphics) {
         guiGraphics.blit(LIST_FRAME, (this.width / 2) - (this.frameWidth / 2), this.height / 2 - (this.frameHeight / 2), 0.0F, 0.0F, 141, 168, 256, 256);

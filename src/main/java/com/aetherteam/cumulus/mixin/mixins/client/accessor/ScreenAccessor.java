@@ -9,8 +9,20 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(Screen.class)
 public interface ScreenAccessor {
     @Mutable
-    @Accessor("BACKGROUND_LOCATION")
-    static void cumulus$setBackgroundLocation(ResourceLocation location) {
+    @Accessor("MENU_BACKGROUND")
+    static void cumulus$setMenuBackground(ResourceLocation location) {
+        throw new AssertionError();
+    }
+
+    @Mutable
+    @Accessor("HEADER_SEPARATOR")
+    static void cumulus$setHeaderSeparator(ResourceLocation location) {
+        throw new AssertionError();
+    }
+
+    @Mutable
+    @Accessor("FOOTER_SEPARATOR")
+    static void cumulus$setFooterSeparator(ResourceLocation location) {
         throw new AssertionError();
     }
 }

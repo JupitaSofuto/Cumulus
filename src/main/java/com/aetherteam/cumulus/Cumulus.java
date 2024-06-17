@@ -33,7 +33,7 @@ public class Cumulus {
     public static final ResourceKey<Registry<Menu>> MENU_REGISTRY_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(Cumulus.MODID, "menu"));
     public static final Registry<Menu> MENU_REGISTRY = new RegistryBuilder<>(MENU_REGISTRY_KEY).sync(true).create();
 
-    public Cumulus(ModContainer container, IEventBus bus, Dist dist) {
+    public Cumulus(ModContainer mod, IEventBus bus, Dist dist) {
         bus.addListener(NewRegistryEvent.class, event -> event.register(MENU_REGISTRY));
         
         if (dist == Dist.CLIENT) {
@@ -47,7 +47,7 @@ public class Cumulus {
                 register.register(bus);
             }
 
-            container.registerConfig(ModConfig.Type.CLIENT, CumulusConfig.CLIENT_SPEC);
+            mod.registerConfig(ModConfig.Type.CLIENT, CumulusConfig.CLIENT_SPEC);
         }
     }
 
