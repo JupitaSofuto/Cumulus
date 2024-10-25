@@ -23,7 +23,6 @@ public class MenuListener {
     public static void onGuiOpenHighest(ScreenEvent.Opening event) {
         Screen newScreen = event.getNewScreen();
         MenuHooks.prepareCustomMenus(CumulusClient.MENU_HELPER);
-        MenuHooks.refreshBackgrounds(newScreen, CumulusClient.MENU_HELPER);
     }
 
     /**

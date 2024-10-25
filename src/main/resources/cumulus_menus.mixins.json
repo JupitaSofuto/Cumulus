@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.aetherteam.cumulus.mixin.mixins",
   "minVersion": "0.8",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "refmap": "cumulus_menus.refmap.json",
   "mixins": [
   ],
@@ -13,7 +13,6 @@
     "client.MusicManagerMixin",
     "client.accessor.ScreenAccessor",
     "client.accessor.SplashRendererAccessor",
-    "client.accessor.TabButtonAccessor",
     "client.accessor.TitleScreenAccessor"
   ]
 }

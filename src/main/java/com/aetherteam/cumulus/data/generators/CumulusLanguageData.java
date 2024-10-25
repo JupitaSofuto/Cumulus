@@ -17,6 +17,15 @@ public class CumulusLanguageData extends CumulusLanguageProvider {
 
         this.addMenuTitle("minecraft", "Minecraft");
 
+
+        this.addConfig("title", "Cumulus Configuration");
+        this.addConfig("section.cumulus.menus.client.toml", "Client Settings");
+        this.addConfig("section.cumulus.menus.client.toml.title", "Cumulus Client Configuration");
+
+        this.addConfig("Menu", "Menu");
+        this.addConfig("Menu.tooltip", "Config options for menu settings");
+        this.addConfig("Menu.button", "Options");
+
         this.addClientConfig("menu", "enable_menu_api", "Determines whether the Menu API is enabled or not");
         this.addClientConfig("menu", "active_menu", "Sets the current active menu title screen");
         this.addClientConfig("menu", "enable_menu_list_button", "Adds a button to the top right of the main menu screen to open a menu selection screen");
