@@ -1,13 +1,11 @@
 package com.aetherteam.cumulus.client.event.hooks;
 
 import com.aetherteam.cumulus.CumulusConfig;
-import com.aetherteam.cumulus.api.Menu;
 import com.aetherteam.cumulus.api.MenuHelper;
 import com.aetherteam.cumulus.api.Menus;
 import com.aetherteam.cumulus.client.CumulusClient;
 import com.aetherteam.cumulus.client.gui.screen.MenuSelectionScreen;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.SplashRendererAccessor;
-import com.aetherteam.cumulus.mixin.mixins.client.accessor.TabButtonAccessor;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.TitleScreenAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -41,17 +39,6 @@ public class MenuHooks {
     }
 
     /**
-     * Resets the dirt backgrounds.
-     * @param screen The {@link Screen}.
-     * @param menuHelper The {@link MenuHelper}.
-     */
-    public static void refreshBackgrounds(Screen screen, MenuHelper menuHelper) {
-        if (CumulusConfig.CLIENT.enable_menu_api.get() && screen instanceof TitleScreen) {
-            menuHelper.resetBackgrounds();
-        }
-    }
-
-    /**
      * Tracks a fallback screen and background if the current screen doesn't match a one tied to a registered menu.
      * @param screen The {@link Screen}.
      */
@@ -60,7 +47,6 @@ public class MenuHooks {
             if (CumulusConfig.CLIENT.enable_menu_api.get()) {
                 if (!CumulusClient.MENU_HELPER.doesScreenMatchMenu(titleScreen) || screen.getClass() == TitleScreen.class) {
                     CumulusClient.MENU_HELPER.setFallbackTitleScreen(titleScreen);
-                    CumulusClient.MENU_HELPER.setFallbackBackground(new Menu.Background().regularBackground(Screen.MENU_BACKGROUND).headerSeparator(Screen.HEADER_SEPARATOR).footerSeparator(Screen.FOOTER_SEPARATOR).tabButton(TabButtonAccessor.cumulus$getSprites()));
                 }
             } else if (screen.getClass() == TitleScreen.class) {
                 CumulusClient.MENU_HELPER.setFallbackTitleScreen(titleScreen);

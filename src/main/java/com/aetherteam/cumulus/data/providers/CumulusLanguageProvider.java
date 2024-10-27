@@ -98,8 +98,13 @@ public abstract class CumulusLanguageProvider extends FabricLanguageProvider {
         this.add(this.id + ".menu_title." + key, name);
     }
 
+    public void addConfig(String prefix, String name) {
+        this.add(this.id + ".configuration." + prefix, name);
+    }
+
     public void addClientConfig(String prefix, String key, String name) {
         this.add("config." + this.id + ".client." + prefix + "." + key, name);
+        this.add("config." + this.id + ".client." + prefix + "." + key + ".tooltip", name);
     }
 
     public void addPackDescription(String packName, String description) {
