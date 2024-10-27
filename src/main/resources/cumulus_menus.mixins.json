@@ -2,6 +2,7 @@
   "required": true,
   "package": "com.aetherteam.cumulus.mixin.mixins",
   "minVersion": "0.8",
+  "minMixinExtrasVersion": "0.5.0-beta.3",
   "compatibilityLevel": "JAVA_17",
   "refmap": "cumulus_menus.refmap.json",
   "mixins": [
@@ -11,6 +12,8 @@
   },
   "client": [
     "client.MusicManagerMixin",
+    "client.MinecraftMixinHighest",
+    "client.MinecraftMixinLowest",
     "client.accessor.ScreenAccessor",
     "client.accessor.SplashRendererAccessor",
     "client.accessor.TabButtonAccessor",

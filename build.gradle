@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version "${neogradle_version}"
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'com.matthewprenger.cursegradle' version '[1.4,1.5)'
     id 'com.modrinth.minotaur' version '[2,3)'
 }
@@ -12,7 +12,7 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = "${minecraft_version}-${mod_version}-neoforge"
+version = "${minecraft_version}-${mod_version}-fabric"
 group = mod_group
 
 base {
@@ -21,29 +21,9 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-runs {
-    configureEach {
-        systemProperty 'forge.logging.markers', 'REGISTRIES'
-        systemProperty  'forge.logging.console.level', 'debug'
-
-        modSource project.sourceSets.main
-    }
-
-    client {
-        systemProperty 'forge.enabledGameTestNamespaces', mod_id
-    }
-
-    server {
-        systemProperty 'forge.enabledGameTestNamespaces', mod_id
-        programArgument '--nogui'
-    }
-
-    gameTestServer {
-        systemProperty 'neoforge.enabledGameTestNamespaces', mod_id
-    }
-
-    data {
-        programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath(), '--existing', file('src/generated/resources/').getAbsolutePath()
+fabricApi {
+    configureDataGeneration {
+        modId = mod_id
     }
 }
 
@@ -52,11 +32,27 @@ sourceSets.main.resources {
 }
 
 dependencies {
-    implementation "net.neoforged:neoforge:${project.neo_version}"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+    mappings loom.layered() {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${project.property("neogradle.subsystems.parchment.minecraftVersion")}:${project.property("neogradle.subsystems.parchment.mappingsVersion")}@zip")
+    }
+
+    modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixin_extra_version}"))
+    include("io.github.llamalad7:mixinextras-fabric:${project.mixin_extra_version}:slim")
+
+    modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${project.forge_config_version}"
 }
 
 repositories {
     maven { url = "https://maven.blamejared.com" }
+    maven { url = "https://maven.parchmentmc.org" }
+    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" }
+    maven { url = "https://maven.terraformersmc.com/" }
 }
 
 tasks.withType(ProcessResources).configureEach {
@@ -72,13 +68,13 @@ tasks.withType(ProcessResources).configureEach {
             mod_description        : mod_description,
             minecraft_version      : minecraft_version,
             minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            neo_version_range      : neo_version_range,
-            loader_version_range   : loader_version_range
+            fabric_version         : fabric_version,
+            fabric_version_range   : fabric_version_range,
+            fabric_loader_version_range : fabric_loader_version_range
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/neoforge.mods.toml']) {
+    filesMatching(['fabric.mod.json']) {
         expand replaceProperties
     }
 }

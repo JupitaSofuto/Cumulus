@@ -14,10 +14,8 @@ import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.event.ScreenEvent;
-import net.neoforged.neoforge.common.NeoForge;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
@@ -89,7 +87,7 @@ public class MenuSelectionScreen extends Screen {
         }
         this.renderBlurredBackground(partialTick);
         this.renderMenuBackground(guiGraphics);
-        NeoForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
+//        NeoForge.EVENT_BUS.post(new ScreenEvent.BackgroundRendered(this, guiGraphics));
     }
 
     @Override
@@ -117,6 +115,6 @@ public class MenuSelectionScreen extends Screen {
 
     @Override
     public void onClose() {
-        this.getMinecraft().setScreen(this.parentScreen);
+        this.minecraft.setScreen(this.parentScreen);
     }
 }

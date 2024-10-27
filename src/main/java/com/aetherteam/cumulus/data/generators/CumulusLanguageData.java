@@ -1,12 +1,14 @@
 package com.aetherteam.cumulus.data.generators;
 
-import com.aetherteam.cumulus.Cumulus;
 import com.aetherteam.cumulus.data.providers.CumulusLanguageProvider;
-import net.minecraft.data.PackOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.core.HolderLookup;
+
+import java.util.concurrent.CompletableFuture;
 
 public class CumulusLanguageData extends CumulusLanguageProvider {
-    public CumulusLanguageData(PackOutput output) {
-        super(output, Cumulus.MODID);
+    public CumulusLanguageData(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        super(output, registryLookup);
     }
 
     @Override

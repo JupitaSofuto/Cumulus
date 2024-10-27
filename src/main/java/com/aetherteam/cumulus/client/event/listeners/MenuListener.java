@@ -1,27 +1,21 @@
 package com.aetherteam.cumulus.client.event.listeners;
 
-import com.aetherteam.cumulus.Cumulus;
 import com.aetherteam.cumulus.api.MenuHelper;
 import com.aetherteam.cumulus.client.CumulusClient;
 import com.aetherteam.cumulus.client.event.hooks.MenuHooks;
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
+import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ScreenEvent;
+import org.jetbrains.annotations.Nullable;
 
-@EventBusSubscriber(modid = Cumulus.MODID, value = Dist.CLIENT)
 public class MenuListener {
     /**
      * @see MenuHooks#prepareCustomMenus(MenuHelper)
      * @see MenuHooks#refreshBackgrounds(Screen, MenuHelper)
      */
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onGuiOpenHighest(ScreenEvent.Opening event) {
-        Screen newScreen = event.getNewScreen();
+    public static void onGuiOpenHighest(Screen oldScreen, Screen newScreen) {
         MenuHooks.prepareCustomMenus(CumulusClient.MENU_HELPER);
         MenuHooks.refreshBackgrounds(newScreen, CumulusClient.MENU_HELPER);
     }
@@ -30,37 +24,36 @@ public class MenuListener {
      * @see MenuHooks#setLastSplash(Screen, MenuHelper)
      * @see MenuHooks#trackFallbacks(Screen)
      */
-    @SubscribeEvent(priority = EventPriority.LOW)
-    public static void onGuiOpenLow(ScreenEvent.Opening event) {
-        Screen screen = event.getScreen();
-        Screen newScreen = event.getNewScreen();
-        MenuHooks.setLastSplash(screen, CumulusClient.MENU_HELPER);
+    @Nullable
+    public static Screen onGuiOpenLow(Screen newScreen) {
+        MenuHooks.setLastSplash(newScreen, CumulusClient.MENU_HELPER);
         MenuHooks.trackFallbacks(newScreen);
-        Screen titleScreen = MenuHooks.setupCustomMenu(screen, CumulusClient.MENU_HELPER);
-        if (titleScreen != null) {
-            event.setNewScreen(titleScreen);
-        }
+        return MenuHooks.setupCustomMenu(newScreen, CumulusClient.MENU_HELPER);
     }
 
     /**
      * @see MenuHooks#resetFade(MenuHelper)
      */
-    @SubscribeEvent
-    public static void onGuiDraw(ScreenEvent.Render.Post event) {
+    public static void onGuiDraw() {
         MenuHooks.resetFade(CumulusClient.MENU_HELPER);
     }
 
     /**
      * @see MenuHooks#setupMenuScreenButton(Screen)
      */
-    @SubscribeEvent
-    public static void onGuiInitialize(ScreenEvent.Init.Post event) {
-        Screen screen = event.getScreen();
+    public static void onGuiInitialize(Screen screen) {
         if (screen instanceof TitleScreen) {
             Button menuSwitchButton = MenuHooks.setupMenuScreenButton(screen);
             if (menuSwitchButton != null) {
-                event.addListener(menuSwitchButton);
+                Screens.getButtons(screen).add(menuSwitchButton);
             }
         }
+    }
+
+    public static void initEvents() {
+        ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
+            ScreenEvents.afterRender(screen).register((screen1, drawContext, mouseX, mouseY, tickDelta) -> onGuiDraw());
+        });
+        ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> onGuiInitialize(screen));
     }
 }

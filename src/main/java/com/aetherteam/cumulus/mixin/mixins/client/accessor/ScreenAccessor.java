@@ -1,5 +1,6 @@
 package com.aetherteam.cumulus.mixin.mixins.client.accessor;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,4 +26,7 @@ public interface ScreenAccessor {
     static void cumulus$setFooterSeparator(ResourceLocation location) {
         throw new AssertionError();
     }
+
+    @Accessor("minecraft")
+    Minecraft cumulus$minecraft();
 }
