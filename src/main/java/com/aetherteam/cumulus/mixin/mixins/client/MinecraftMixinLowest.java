@@ -1,6 +1,6 @@
 package com.aetherteam.cumulus.mixin.mixins.client;
 
-import com.aetherteam.cumulus.client.event.listeners.MenuListener;
+import com.aetherteam.cumulus.fabric.OpeningScreenEvents;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -19,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(value = Minecraft.class, priority = 2000)
 public abstract class MinecraftMixinLowest {
 
+    @Shadow @Nullable public Screen screen;
+
     @Definition(id = "screen", field = "Lnet/minecraft/client/Minecraft;screen:Lnet/minecraft/client/gui/screens/Screen;")
     @Definition(id = "guiScreen", local = @Local(argsOnly = true, type = Screen.class))
     @Expression("this.screen = guiScreen")
@@ -26,7 +28,7 @@ public abstract class MinecraftMixinLowest {
     private void beforeScreenSetCall(Minecraft instance, Screen value, Operation<Void> original, @Local(argsOnly = true) LocalRef<Screen> guiScreenRef) {
         var newScreen = value;
 
-        var replacementScreen = MenuListener.onGuiOpenLow(newScreen);
+        var replacementScreen = OpeningScreenEvents.POST.invoker().onOpening(this.screen, newScreen);
 
         if (replacementScreen != null) {
             value = replacementScreen;

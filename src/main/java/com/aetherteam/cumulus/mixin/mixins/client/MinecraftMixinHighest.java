@@ -1,6 +1,6 @@
 package com.aetherteam.cumulus.mixin.mixins.client;
 
-import com.aetherteam.cumulus.client.event.listeners.MenuListener;
+import com.aetherteam.cumulus.fabric.OpeningScreenEvents;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -26,7 +26,7 @@ public abstract class MinecraftMixinHighest {
         if (guiScreen != null) {
             var oldScreen = this.screen;
 
-            MenuListener.onGuiOpenHighest(oldScreen, guiScreen);
+            OpeningScreenEvents.PRE.invoker().onOpening(oldScreen, guiScreen);
         }
     }
 }
