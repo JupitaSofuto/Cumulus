@@ -3,6 +3,7 @@ package com.aetherteam.cumulus.client.event.listeners;
 import com.aetherteam.cumulus.api.MenuHelper;
 import com.aetherteam.cumulus.client.CumulusClient;
 import com.aetherteam.cumulus.client.event.hooks.MenuHooks;
+import com.aetherteam.cumulus.fabric.OpeningScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
 import net.minecraft.client.gui.components.Button;
@@ -54,5 +55,7 @@ public class MenuListener {
             ScreenEvents.afterRender(screen).register((screen1, drawContext, mouseX, mouseY, tickDelta) -> onGuiDraw());
         });
         ScreenEvents.AFTER_INIT.register((client, screen, scaledWidth, scaledHeight) -> onGuiInitialize(screen));
+        OpeningScreenEvents.PRE.register(MenuListener::onGuiOpenHighest);
+        OpeningScreenEvents.POST.register((oldScreen, newScreen) -> onGuiOpenLow(newScreen));
     }
 }
