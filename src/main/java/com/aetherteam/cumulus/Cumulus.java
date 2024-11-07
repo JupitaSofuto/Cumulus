@@ -2,6 +2,7 @@ package com.aetherteam.cumulus;
 
 import com.aetherteam.cumulus.api.Menu;
 import com.aetherteam.cumulus.api.Menus;
+import com.aetherteam.cumulus.client.event.listeners.MenuListener;
 import com.mojang.logging.LogUtils;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import net.fabricmc.api.ClientModInitializer;
@@ -24,5 +25,6 @@ public class Cumulus implements ClientModInitializer {
         Menus.init();
 
         NeoForgeConfigRegistry.INSTANCE.register(Cumulus.MODID, ModConfig.Type.CLIENT, CumulusConfig.CLIENT_SPEC);
+        MenuListener.initEvents();
     }
 }

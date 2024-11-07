@@ -26,14 +26,14 @@ public abstract class MinecraftMixinLowest {
     @Expression("this.screen = guiScreen")
     @WrapOperation(method = "setScreen", at = @At(value = "MIXINEXTRAS:EXPRESSION"))
     private void beforeScreenSetCall(Minecraft instance, Screen value, Operation<Void> original, @Local(argsOnly = true) LocalRef<Screen> guiScreenRef) {
-        var newScreen = value;
+        if (value != null) {
+            var replacementScreen = OpeningScreenEvents.POST.invoker().onOpening(this.screen, value);
 
-        var replacementScreen = OpeningScreenEvents.POST.invoker().onOpening(this.screen, newScreen);
+            if (replacementScreen != null) {
+                value = replacementScreen;
 
-        if (replacementScreen != null) {
-            value = replacementScreen;
-
-            guiScreenRef.set(replacementScreen);
+                guiScreenRef.set(replacementScreen);
+            }
         }
 
         original.call(instance, value);
