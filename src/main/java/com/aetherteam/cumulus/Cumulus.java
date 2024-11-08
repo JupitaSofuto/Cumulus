@@ -6,6 +6,7 @@ import com.aetherteam.cumulus.client.event.listeners.MenuListener;
 import com.mojang.logging.LogUtils;
 import fuzs.forgeconfigapiport.fabric.api.neoforge.v4.NeoForgeConfigRegistry;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -13,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.config.ModConfig;
 import org.slf4j.Logger;
 
-public class Cumulus implements ClientModInitializer {
+public class Cumulus implements ClientModInitializer, ModInitializer {
     public static final String MODID = "cumulus_menus";
     public static final Logger LOGGER = LogUtils.getLogger();
 
@@ -24,7 +25,11 @@ public class Cumulus implements ClientModInitializer {
     public void onInitializeClient() {
         Menus.init();
 
-        NeoForgeConfigRegistry.INSTANCE.register(Cumulus.MODID, ModConfig.Type.CLIENT, CumulusConfig.CLIENT_SPEC);
         MenuListener.initEvents();
+    }
+
+    @Override
+    public void onInitialize() {
+        NeoForgeConfigRegistry.INSTANCE.register(Cumulus.MODID, ModConfig.Type.CLIENT, CumulusConfig.CLIENT_SPEC);
     }
 }
