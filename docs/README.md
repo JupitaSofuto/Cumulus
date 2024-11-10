@@ -30,13 +30,15 @@ If you're interested in sponsoring Cumulus or The Aether Team, please [contact O
 
 ## :package: Download the latest releases
 [![Modloader: Forge](https://img.shields.io/badge/mod%20loader-forge-CC974D?style=flat-square)](https://files.minecraftforge.net/net/minecraftforge/forge/)
+[![Modloader: NeoForge](https://img.shields.io/badge/mod%20loader-neoforge-E08234?style=flat-square)](https://neoforged.net/)
+[![Modloader: Fabric](https://img.shields.io/badge/mod%20loader-fabric-1F6FEB?style=flat-square)](https://fabricmc.net/use/installer/)
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/cumulus?color=00AF5C&logo=modrinth)](https://modrinth.com/mod/cumulus)
 [![Modrinth Version](https://img.shields.io/modrinth/game-versions/cumulus?color=00AF5C&label=latest&logo=modrinth&last=true)](https://modrinth.com/mod/cumulus)
 [![CurseForge Downloads](http://cf.way2muchnoise.eu/cumulus.svg)](https://www.curseforge.com/minecraft/mc-mods/cumulus)
 [![CurseForge Version](http://cf.way2muchnoise.eu/versions/cumulus_latest.svg)](https://www.curseforge.com/minecraft/mc-mods/cumulus)
 [![CircleCI](https://circleci.com/gh/The-Aether-Team/Cumulus/tree/1.20.2-develop.svg?style=shield)](https://app.circleci.com/pipelines/github/The-Aether-Team/Cumulus?branch=1.20.2-develop)
 ### Release builds
-Cumulus has stable release builds available for 1.19.2, 1.19.4, 1.20.1, and 1.20.2 on [Modrinth](https://modrinth.com/mod/cumulus) and [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cumulus).
+Cumulus has stable release builds available for 1.19.2, 1.19.4, 1.20.1, 1.20.2, and 1.20.4 on [Modrinth](https://modrinth.com/mod/cumulus) and [CurseForge](https://www.curseforge.com/minecraft/mc-mods/cumulus).
 
 ### Bleeding edge builds
 If you’re feeling a bit more adventurous or wish to help test the in-development versions, we provide **bleeding edge builds** which are produced on [CircleCI](https://app.circleci.com/pipelines/github/The-Aether-Team/Cumulus). These builds are created for every new commit and contain the latest available code. We do not recommend users treat these builds as releases, as they are unfinished and may contain serious issues. If you wish to download these builds, check out [this guide](https://github.com/The-Aether-Team/Cumulus/wiki/CircleCI-Guide).
