@@ -128,7 +128,7 @@ curseforge {
         changelogType = "markdown"
         addGameVersion("${minecraft_version}")
         addGameVersion("Fabric")
-        mainArtifact(tasks.jar) {
+        mainArtifact(tasks.remapJar) {
             displayName = "${mod_name} - ${version}"
         }
     }
@@ -141,9 +141,10 @@ modrinth {
     versionType = "${version_type}"
     versionName = "${mod_name} - ${version}"
     changelog = new File("$rootDir/docs/CHANGELOG.md").text
-    uploadFile = tasks.jar
+    uploadFile = tasks.remapJar
     gameVersions = ["${minecraft_version}"]
     loaders = ["fabric"]
+    debugMode = true
 }
 
 idea {
