@@ -144,7 +144,6 @@ modrinth {
     uploadFile = tasks.remapJar
     gameVersions = ["${minecraft_version}"]
     loaders = ["fabric"]
-    debugMode = true
 }
 
 idea {
