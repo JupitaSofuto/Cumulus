@@ -1,3 +1,7 @@
+# Cumulus - NeoForge - 1.21.1-1.1.2
+
+- Update logo file name.
+
 # Cumulus - NeoForge - 1.21.1-1.1.0
 
 - Port to 1.21.1
