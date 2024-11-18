@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nullable;
@@ -36,7 +37,9 @@ public class MenuHooks {
      * @param menuHelper The {@link MenuHelper}.
      */
     public static void prepareCustomMenus(MenuHelper menuHelper) {
-        menuHelper.prepareMenu(Menus.MINECRAFT.get());
+        if (BuiltInRegistries.REGISTRY.get(Menus.MENUS.getRegistryKey().location()) != null) {
+            menuHelper.prepareMenu(Menus.MINECRAFT.get());
+        }
     }
 
     /**
