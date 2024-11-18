@@ -1,3 +1,7 @@
+# Cumulus - NeoForge - 1.21.1-1.1.3
+
+- Fix missing registry crash.
+
 # Cumulus - NeoForge - 1.21.1-1.1.2
 
 - Update logo file name.
