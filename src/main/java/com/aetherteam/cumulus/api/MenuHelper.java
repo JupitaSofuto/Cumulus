@@ -8,7 +8,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.renderer.PanoramaRenderer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.Music;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import javax.annotation.Nullable;
 import java.util.Calendar;
@@ -45,9 +47,11 @@ public class MenuHelper {
      * Prepares a menu for application by marking it active if the condition is true.
      * @param menu The {@link Menu} to set active.
      */
-    public void prepareMenu(Menu menu) {
-        if (menu.getCondition().getAsBoolean()) {
-            this.setActiveMenu(menu);
+    public void prepareMenu(DeferredHolder<Menu, Menu> menu) {
+        if (menu.getKey() != null && BuiltInRegistries.REGISTRY.get(menu.getKey().registry()) != null) {
+            if (menu.get().getCondition().getAsBoolean()) {
+                this.setActiveMenu(menu.get());
+            }
         }
     }
 
