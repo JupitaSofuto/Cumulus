@@ -37,7 +37,7 @@ public class MenuHooks {
      * @param menuHelper The {@link MenuHelper}.
      */
     public static void prepareCustomMenus(MenuHelper menuHelper) {
-        if (BuiltInRegistries.REGISTRY.get(Menus.MENUS.getRegistryKey().location()) != null) {
+        if (Menus.MINECRAFT.getKey() != null && BuiltInRegistries.REGISTRY.get(Menus.MINECRAFT.getKey().registry()) != null) {
             menuHelper.prepareMenu(Menus.MINECRAFT.get());
         }
     }

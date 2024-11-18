@@ -5,6 +5,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import javax.annotation.Nullable;
@@ -20,7 +21,7 @@ public class Menus {
     public static final Component MINECRAFT_NAME = Component.translatable("cumulus_menus.menu_title.minecraft");
     public static final BooleanSupplier MINECRAFT_CONDITION = () -> true;
 
-    public static final Supplier<Menu> MINECRAFT = MENUS.register("minecraft", () -> new Menu(MINECRAFT_ICON, MINECRAFT_NAME, new TitleScreen(true), MINECRAFT_CONDITION));
+    public static final DeferredHolder<Menu, Menu> MINECRAFT = MENUS.register("minecraft", () -> new Menu(MINECRAFT_ICON, MINECRAFT_NAME, new TitleScreen(true), MINECRAFT_CONDITION));
 
     @Nullable
     public static Menu get(String id) {
