@@ -4,5 +4,8 @@ Camotoy
 Firestar99
 - Fix crash on servers.
 
+GizmoTheMoonPig
+- Rework registration system.
+
 Jonathing
 - Make Cumulus client-only.

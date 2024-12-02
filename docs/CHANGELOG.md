@@ -1,3 +1,8 @@
+# Cumulus - 1.21.1-2.0.0
+
+- Rework menu registration system into a better annotation and interface based initialization system.
+- Add the World Preview feature from The Aether.
+
 # Cumulus - NeoForge - 1.21.1-1.1.4
 
 - Fix early config crash.
