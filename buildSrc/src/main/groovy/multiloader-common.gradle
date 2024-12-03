@@ -129,8 +129,8 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId project.archivesBaseName
-            artifact project.jar
-            artifact project.sourcesJar
+            artifact project.tasks.<Jar>findByName(project.name == "fabric" ? "remapJar" : "jar")
+            artifact project.tasks.<Jar>findByName(project.name == "fabric" ? "remapSourcesJar" : "sourcesJar")
         }
     }
     repositories {
