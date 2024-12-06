@@ -6,6 +6,7 @@ import com.aetherteam.cumulus.mixin.mixins.client.accessor.TitleScreenAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.renderer.PanoramaRenderer;
 import net.minecraft.sounds.Music;
 
 import javax.annotation.Nullable;
@@ -19,8 +20,6 @@ public class MenuHelper {
     private Menu activeMenu = null;
     @Nullable
     private TitleScreen fallbackTitleScreen = null;
-    @Nullable
-    private Menu.Background fallbackBackground = null;
     @Nullable
     private String lastSplash = null;
     private boolean shouldFade = true;
@@ -60,13 +59,12 @@ public class MenuHelper {
     public TitleScreen applyMenu(Menu menu) {
         if (CumulusConfig.CLIENT.enable_menu_api.get()) {
             TitleScreen screen = this.checkFallbackScreen(menu, menu.getScreen());
+            TitleScreenAccessor defaultMenuAccessor = (TitleScreenAccessor) screen;
             if (this.shouldFade()) {
-                TitleScreenAccessor defaultMenuAccessor = (TitleScreenAccessor) screen;
                 defaultMenuAccessor.cumulus$setFading(true);
                 defaultMenuAccessor.cumulus$setFadeInStart(0L);
             }
-            Menu.Background background = this.checkFallbackBackground(menu, screen, menu.getBackground());
-            this.applyBackgrounds(background);
+            defaultMenuAccessor.cumulus$setPanorama(new PanoramaRenderer(menu.getPanorama()));
             if (this.getLastSplash() != null) {
                 this.migrateSplash(this.getLastSplash(), screen);
             }
@@ -87,20 +85,6 @@ public class MenuHelper {
             screen = this.getFallbackTitleScreen();
         }
         return screen;
-    }
-
-    /**
-     * Checks if there is a fallback {@link Menu.Background} to apply. This is used if another mod has custom dirt backgrounds.
-     * @param menu The current {@link Menu}.
-     * @param screen The current {@link Screen}.
-     * @param background The current {@link Menu.Background}.
-     * @return The fallback {@link Menu.Background}.
-     */
-    private Menu.Background checkFallbackBackground(Menu menu, TitleScreen screen, Menu.Background background) {
-        if ((screen.getClass() == TitleScreen.class || menu == Menus.MINECRAFT.get()) && this.getFallbackBackground() != null) {
-            background = this.getFallbackBackground();
-        }
-        return background;
     }
 
     /**
@@ -140,22 +124,6 @@ public class MenuHelper {
      */
     public void setFallbackTitleScreen(@Nullable TitleScreen fallbackTitleScreen) {
         this.fallbackTitleScreen = fallbackTitleScreen;
-    }
-
-    /**
-     * @return The fallback {@link Menu.Background}.
-     */
-    @Nullable
-    public Menu.Background getFallbackBackground() {
-        return this.fallbackBackground;
-    }
-
-    /**
-     * Sets the fallback {@link Menu.Background}.
-     * @param fallbackBackground The {@link Menu.Background}.
-     */
-    public void setFallbackBackground(@Nullable Menu.Background fallbackBackground) {
-        this.fallbackBackground = fallbackBackground;
     }
 
     /**
@@ -204,21 +172,6 @@ public class MenuHelper {
                 splashRendererAccessor.cumulus$setSplash(splash);
             }
         }
-    }
-
-    /**
-     * Applies a background.
-     * @param background The {@link com.aetherteam.cumulus.api.Menu.Background}.
-     */
-    public void applyBackgrounds(Menu.Background background) {
-        Menu.Background.apply(background);
-    }
-
-    /**
-     * Resets the background.
-     */
-    public void resetBackgrounds() {
-        Menu.Background.reset();
     }
 
     /**

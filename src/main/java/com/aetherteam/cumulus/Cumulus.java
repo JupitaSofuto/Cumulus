@@ -5,6 +5,7 @@ import com.aetherteam.cumulus.api.Menus;
 import com.aetherteam.cumulus.data.generators.CumulusLanguageData;
 import com.mojang.logging.LogUtils;
 import net.minecraft.SharedConstants;
+import net.minecraft.client.renderer.CubeMap;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;

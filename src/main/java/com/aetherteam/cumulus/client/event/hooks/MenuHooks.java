@@ -1,19 +1,16 @@
 package com.aetherteam.cumulus.client.event.hooks;
 
 import com.aetherteam.cumulus.CumulusConfig;
-import com.aetherteam.cumulus.api.Menu;
 import com.aetherteam.cumulus.api.MenuHelper;
 import com.aetherteam.cumulus.api.Menus;
 import com.aetherteam.cumulus.client.CumulusClient;
 import com.aetherteam.cumulus.client.gui.screen.MenuSelectionScreen;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.SplashRendererAccessor;
-import com.aetherteam.cumulus.mixin.mixins.client.accessor.TabButtonAccessor;
 import com.aetherteam.cumulus.mixin.mixins.client.accessor.TitleScreenAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
 import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nullable;
@@ -43,17 +40,6 @@ public class MenuHooks {
     }
 
     /**
-     * Resets the dirt backgrounds.
-     * @param screen The {@link Screen}.
-     * @param menuHelper The {@link MenuHelper}.
-     */
-    public static void refreshBackgrounds(Screen screen, MenuHelper menuHelper) {
-        if (CumulusConfig.CLIENT.enable_menu_api.get() && screen instanceof TitleScreen) {
-            menuHelper.resetBackgrounds();
-        }
-    }
-
-    /**
      * Tracks a fallback screen and background if the current screen doesn't match a one tied to a registered menu.
      * @param screen The {@link Screen}.
      */
@@ -62,7 +48,6 @@ public class MenuHooks {
             if (CumulusConfig.CLIENT.enable_menu_api.get()) {
                 if (!CumulusClient.MENU_HELPER.doesScreenMatchMenu(titleScreen) || screen.getClass() == TitleScreen.class) {
                     CumulusClient.MENU_HELPER.setFallbackTitleScreen(titleScreen);
-                    CumulusClient.MENU_HELPER.setFallbackBackground(new Menu.Background().regularBackground(Screen.BACKGROUND_LOCATION).darkBackground(CreateWorldScreen.LIGHT_DIRT_BACKGROUND).headerSeparator(CreateWorldScreen.HEADER_SEPERATOR).footerSeparator(CreateWorldScreen.FOOTER_SEPERATOR).tabButton(TabButtonAccessor.cumulus$getTextureLocation()));
                 }
             } else if (screen.getClass() == TitleScreen.class) {
                 CumulusClient.MENU_HELPER.setFallbackTitleScreen(titleScreen);
@@ -78,7 +63,7 @@ public class MenuHooks {
      */
     @Nullable
     public static Screen setupCustomMenu(Screen screen, MenuHelper menuHelper) {
-        if (CumulusConfig.CLIENT.enable_menu_api.get() && screen instanceof TitleScreen) {
+        if (screen instanceof TitleScreen && CumulusConfig.CLIENT.enable_menu_api.get()) {
             return menuHelper.applyMenu(menuHelper.getActiveMenu());
         }
         return null;
